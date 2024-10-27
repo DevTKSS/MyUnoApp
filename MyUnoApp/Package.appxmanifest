@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap">
+
+  <Identity Name="MyUnoApp"
+            Version="1.0.0.0"
+            Publisher="CN=TKSDevDesign"
+            ProcessorArchitecture="x64"/>
+  <Properties>
+    <DisplayName>My Uno App</DisplayName>
+    <PublisherDisplayName>TKSDevDesign</PublisherDisplayName>
+    <Logo>Assets/Images/tks_logo.png</Logo>
+  </Properties> 
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="$targetentrypoint$">
+      <uap:VisualElements DisplayName="My Uno Application"
+                          Description="Experimental Uno App from a Newbe"
+                          Square44x44Logo="Assets/Images/logo_tks.png"
+                          Square150x150Logo="Assets/Images/logo_tks.png"
+                          BackgroundColor="#f0f8ff" />
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
