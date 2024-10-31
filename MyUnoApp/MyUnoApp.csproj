@@ -1,6 +1,6 @@
 <Project Sdk="Uno.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows10.0.19041;net8.0-browserwasm;net8.0-desktop</TargetFrameworks>
+    <TargetFrameworks>net8.0-desktop;net8.0-ios;net8.0-maccatalyst;net8.0-browserwasm;net8.0-android;</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
@@ -47,31 +47,14 @@
       ThemeService;
     </UnoFeatures>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.26100.0</TargetFrameworks>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Images\logo_tks.svg" />
   </ItemGroup>
   <ItemGroup>
     <UnoImage Include="Assets\Images\logo_tks.svg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Services\ContentDialog1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Update="Services\ContentDialog1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </AdditionalFiles>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Presentation\ContentDialog1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Update="Presentation\ContentDialog1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </AdditionalFiles>
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,7 @@
-using System.Runtime.CompilerServices;
-
+using Microsoft.UI.Xaml.Markup;
+using MyUnoApp.Services;
+using Uno.Extensions.Navigation.Regions;
+using Uno.Extensions.Navigation.UI;
 namespace MyUnoApp.Presentation;
 
 public partial record MainModel
@@ -16,10 +18,9 @@ public partial record MainModel
     }
 
     public string? Title { get; }
+    public IState<string> DialogResult => State<string>.Value(this, () => string.Empty);
 
     public IState<string> Name => State<string>.Value(this, () => string.Empty);
-
-    public IState<string> DialogResult => State<string>.Value(this, () => string.Empty);
 
     public async Task GoToSecond()
     {
@@ -27,37 +28,56 @@ public partial record MainModel
         await _navigator.NavigateViewModelAsync<SecondModel>(this, data: new Entity(name!));
     }
 
-    public async Task ShowDialogAsync(XamlRoot xamlRoot,
-                                      string title,
-                                      string message,
-                                      string primaryButtonText,
-                                      string? secondaryButtonText = null,
-                                      string? closeButtonText = null)
+    public async Task ShowDialogAsync()
     {
         ContentDialog dialog = new ContentDialog
         {
-            Title = title,
-            Content = message,
-            PrimaryButtonText = primaryButtonText,
-            SecondaryButtonText = secondaryButtonText,
-            CloseButtonText = closeButtonText,
-            XamlRoot = xamlRoot,
+            Title = "Some Title",
+            Content = "Some Content",
+            PrimaryButtonText = "OK",
+            XamlRoot = XamlRootService.GetXamlRoot(),
+            DefaultButton = ContentDialogButton.Primary
         };
-        if (secondaryButtonText is not null)
-        {
-            dialog.SecondaryButtonText = secondaryButtonText;
-        }
-        if (closeButtonText is not null)
-        {
-            dialog.CloseButtonText = closeButtonText;
-        }
-        ContentDialogResult result = await dialog.ShowAsync();
 
+        ContentDialogResult result = await dialog.ShowAsync();
         await DialogResult.SetAsync(result switch
         {
-            ContentDialogResult.Primary => primaryButtonText,
-            ContentDialogResult.Secondary => secondaryButtonText ?? "secondaryButton",
-            _ => closeButtonText
+            ContentDialogResult.Primary => "OK",
+            _ => "Canceled",
         });
     }
+
+    //public async Task ShowDialogAsync(XamlRoot xamlRoot,
+    //                                  string title,
+    //                                  string message,
+    //                                  string primaryButtonText,
+    //                                  string? secondaryButtonText = null,
+    //                                  string? closeButtonText = null)
+    //{
+    //    ContentDialog dialog = new ContentDialog
+    //    {
+    //        Title = title,
+    //        Content = message,
+    //        PrimaryButtonText = primaryButtonText,
+    //        SecondaryButtonText = secondaryButtonText,
+    //        CloseButtonText = closeButtonText,
+    //        XamlRoot = xamlRoot,
+    //    };
+    //    if (secondaryButtonText is not null)
+    //    {
+    //        dialog.SecondaryButtonText = secondaryButtonText;
+    //    }
+    //    if (closeButtonText is not null)
+    //    {
+    //        dialog.CloseButtonText = closeButtonText;
+    //    }
+    //    ContentDialogResult result = await dialog.ShowAsync();
+
+    //    await DialogResult.SetAsync(result switch
+    //    {
+    //        ContentDialogResult.Primary => primaryButtonText,
+    //        ContentDialogResult.Secondary => secondaryButtonText ?? "secondaryButton",
+    //        _ => closeButtonText
+    //    });
+    //}
 }
