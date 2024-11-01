@@ -28,10 +28,6 @@ public partial record MainModel
         await _navigator.NavigateViewModelAsync<SecondModel>(this, data: new Entity(name!));
     }
 
-    public async Task ShowMyDialog()
-    {
-        DialogResult.SetAsync(_navigator.GetDataAsync<string>(ShowDialogAsync, qualifier: Qualifiers.Dialog));
-    }
     public async Task ShowDialogAsync()
     {
         try

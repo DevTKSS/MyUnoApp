@@ -4,8 +4,7 @@
 
     <OutputType>Exe</OutputType>
     <UnoSingleProject>true</UnoSingleProject>
-
-    <!-- Display name -->
+    <!--Display Name-->
     <ApplicationTitle>MyUnoApp</ApplicationTitle>
     <!-- App Identifier -->
     <ApplicationId>com.companyname.MyUnoApp</ApplicationId>
