@@ -4,6 +4,7 @@ namespace MyUnoApp.Presentation;
 
 public sealed partial class MainPage : Page
 {
+    public IState<string> DialogResult => State<string>.Value(this, () => string.Empty); 
     public MainPage()
     {
         Loaded += MainPage_Loaded;
@@ -64,9 +65,10 @@ public sealed partial class MainPage : Page
                             //                   )
                             //            ),
                             new TextBlock()
-                                .Name(out var DialogResultOutput)
+                                .Name (out var DialogResult)
+                                .Style(Theme.TextBlock.Styles.DisplayMedium)
                                 .AutomationProperties(automationId: "DialogResultOutput")
-                                .Text(x => x.Binding(() => vm.DialogResult).Mode(BindingMode.OneWay))
+                                .Text(x => x.Binding(() => this.DialogResult).Mode(BindingMode.OneWay))
                         )
                 )
             );
@@ -76,6 +78,115 @@ public sealed partial class MainPage : Page
     {
         XamlRootService.Initialize(this.XamlRoot!);
     }
-    
 
+    //public async Task ShowDialogAsync()
+    //{
+    //    try
+    //    {
+    //        ContentDialog dialog = new ContentDialog
+    //        {
+    //            Title = "Some Title",
+    //            Content = "Some Content",
+    //            PrimaryButtonText = "OK",
+    //            XamlRoot = XamlRootService.GetXamlRoot(),
+    //            DefaultButton = ContentDialogButton.Primary
+    //        };
+
+    //        var result = await dialog.ShowAsync();
+    //        if (result == ContentDialogResult.Primary)
+    //        {
+    //            await DialogResult.SetAsync(dialog.PrimaryButtonText);
+    //        }
+    //        else
+    //        {
+    //            await DialogResult.SetAsync("Canceled");
+    //        }
+    //        //await DialogResult.SetAsync(result switch
+    //        //{
+    //        //    ContentDialogResult.Primary => "OK",
+    //        //    _ => "Canceled",
+    //        //});
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($"ShowDialogAsync got exception: {ex.Message}");
+    //    }
+    //}
+
+    //private async void GoRight_Click(object sender, RoutedEventArgs e)
+    //{
+    //    ContentDialog dialog = new ContentDialog()
+    //                                .Style(Theme.ContentDialog.Styles.Default)
+    //                                .Title("Save your Work?")
+    //                                .Content(
+    //                                    new StackPanel()
+    //                                          .VerticalAlignment(VerticalAlignment.Stretch)
+    //                                          .HorizontalAlignment(HorizontalAlignment.Stretch)
+    //                                          .Children(
+    //                                                new TextBlock()
+    //                                                    .Text("Lorem ipsum dolor sit amet, adipisicing elit.")
+    //                                                    .TextWrapping(TextWrapping.Wrap),
+    //                                                new CheckBox()
+    //                                                    .Content("Upload your content to the cloud")
+    //                                                    ))
+    //                                .PrimaryButtonText("Save")
+    //                                .SecondaryButtonText("Don't Save")
+    //                                .CloseButtonText("Cancel")
+    //                                .DefaultButton(ContentDialogButton.Primary);
+    //dialog.XamlRoot = this.XamlRoot;
+
+    //    var result = await dialog.ShowAsync();
+
+
+    //    if (result == ContentDialogResult.Primary)
+    //    {
+    //        DialogResult.Text = "User saved their work";
+    //    }
+    //    else if (result == ContentDialogResult.Secondary)
+    //    {
+    //        DialogResult.Text = "User did not save their work";
+    //    }
+    //    else
+    //    {
+    //        DialogResult.Text = "User cancelled the dialog";
+    //    }
+    //}
+
+    //private async Task ShowContentDialog()
+    //{
+    //    ContentDialog dialog = new ContentDialog()
+    //                                .Style(Theme.ContentDialog.Styles.Default)
+    //                                .Title("Save your Work?")
+    //                                .Content(
+    //                                    new StackPanel()
+    //                                          .VerticalAlignment(VerticalAlignment.Stretch)
+    //                                          .HorizontalAlignment(HorizontalAlignment.Stretch)
+    //                                          .Children(
+    //                                                new TextBlock()
+    //                                                    .Text("Lorem ipsum dolor sit amet, adipisicing elit.")
+    //                                                    .TextWrapping(TextWrapping.Wrap),
+    //                                                new CheckBox()
+    //                                                    .Content("Upload your content to the cloud")
+    //                                                    ))
+    //                                .PrimaryButtonText("Save")
+    //                                .SecondaryButtonText("Don't Save")
+    //                                .CloseButtonText("Cancel")
+    //                                .DefaultButton(ContentDialogButton.Primary);
+    //    dialog.XamlRoot = this.XamlRoot;
+
+    //    var result = await dialog.ShowAsync();
+
+    //    if (result == ContentDialogResult.Primary)
+    //    {
+    //        DialogResult.Text = "User saved their work";
+    //    }
+    //    else if (result == ContentDialogResult.Secondary)
+    //    {
+    //        DialogResult.Text = "User did not save their work";
+    //    }
+    //    else
+    //    {
+    //        DialogResult.Text = "User cancelled the dialog";
+    //    }
+    //}
 }

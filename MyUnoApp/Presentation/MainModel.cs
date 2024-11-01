@@ -28,23 +28,42 @@ public partial record MainModel
         await _navigator.NavigateViewModelAsync<SecondModel>(this, data: new Entity(name!));
     }
 
+    public async Task ShowMyDialog()
+    {
+        DialogResult.SetAsync(_navigator.GetDataAsync<string>(ShowDialogAsync, qualifier: Qualifiers.Dialog));
+    }
     public async Task ShowDialogAsync()
     {
-        ContentDialog dialog = new ContentDialog
+        try
         {
-            Title = "Some Title",
-            Content = "Some Content",
-            PrimaryButtonText = "OK",
-            XamlRoot = XamlRootService.GetXamlRoot(),
-            DefaultButton = ContentDialogButton.Primary
-        };
+            ContentDialog dialog = new ContentDialog
+            {
+                Title = "Some Title",
+                Content = "Some Content",
+                PrimaryButtonText = "OK",
+                XamlRoot = XamlRootService.GetXamlRoot(),
+                DefaultButton = ContentDialogButton.Primary
+            };
 
-        ContentDialogResult result = await dialog.ShowAsync();
-        await DialogResult.SetAsync(result switch
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                await DialogResult.SetAsync(dialog.PrimaryButtonText);
+            }
+            else
+            {
+                await DialogResult.SetAsync("Canceled");
+            }
+            //await DialogResult.SetAsync(result switch
+            //{
+            //    ContentDialogResult.Primary => "OK",
+            //    _ => "Canceled",
+            //});
+        }
+        catch (Exception ex)
         {
-            ContentDialogResult.Primary => "OK",
-            _ => "Canceled",
-        });
+            Console.WriteLine($"ShowDialogAsync got exception: {ex.Message}");
+        }
     }
 
     //public async Task ShowDialogAsync(XamlRoot xamlRoot,
