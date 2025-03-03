@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyUnoApp.Services;
-internal interface IXamlRootProvider
+namespace MyUnoApp.Services.XamlRootProvider;
+public interface IXamlRootProvider
 {
-    public  XamlRoot GetXamlRoot();
-    public  void Initialize(XamlRoot XamlRoot);
+    public  XamlRoot? GetXamlRoot();
+    public  void InitializeRoot(XamlRoot XamlRoot);
 }

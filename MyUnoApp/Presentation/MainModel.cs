@@ -1,12 +1,8 @@
-using Microsoft.UI.Xaml.Markup;
-using MyUnoApp.Services;
-using Uno.Extensions.Navigation.Regions;
-using Uno.Extensions.Navigation.UI;
 namespace MyUnoApp.Presentation;
 
 public partial record MainModel
 {
-    private INavigator _navigator;
+    private readonly INavigator _navigator;
 
     public MainModel(
         IOptions<AppConfig> appInfo,
@@ -21,45 +17,18 @@ public partial record MainModel
     public IState<string> DialogResult => State<string>.Value(this, () => string.Empty);
 
     public IState<string> Name => State<string>.Value(this, () => string.Empty);
-
+    
     public async Task GoToSecond()
     {
         var name = await Name;
         await _navigator.NavigateViewModelAsync<SecondModel>(this, data: new Entity(name!));
     }
-
+    
     public async Task ShowDialogAsync()
     {
-        try
-        {
-            ContentDialog dialog = new ContentDialog
-            {
-                Title = "Some Title",
-                Content = "Some Content",
-                PrimaryButtonText = "OK",
-                XamlRoot = XamlRootService.GetXamlRoot(),
-                DefaultButton = ContentDialogButton.Primary
-            };
-
-            var result = await dialog.ShowAsync();
-            if (result == ContentDialogResult.Primary)
-            {
-                await DialogResult.SetAsync(dialog.PrimaryButtonText);
-            }
-            else
-            {
-                await DialogResult.SetAsync("Canceled");
-            }
-            //await DialogResult.SetAsync(result switch
-            //{
-            //    ContentDialogResult.Primary => "OK",
-            //    _ => "Canceled",
-            //});
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"ShowDialogAsync got exception: {ex.Message}");
-        }
+        await _navigator.ShowMessageDialogAsync(this,
+            content: "Hello from MainModel without xamlRoot",
+            title: "Some Title Text");
     }
 
     //public async Task ShowDialogAsync(XamlRoot xamlRoot,

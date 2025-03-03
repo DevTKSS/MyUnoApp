@@ -1,53 +1,3 @@
-/* Nicht gemergte Änderung aus Projekt "MyUnoApp (net8.0-windows10.0.26100.0)"
-Vor:
-using Uno.Resizetizer;
-Nach:
-using MyUnoApp.Services.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider.XamlRootProvider;
-using Uno.Resizetizer;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "MyUnoApp (net8.0-ios)"
-Vor:
-using Uno.Resizetizer;
-Nach:
-using MyUnoApp.Services.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider.XamlRootProvider.XamlRootProvider;
-using Uno.Resizetizer;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "MyUnoApp (net8.0-android)"
-Vor:
-using Uno.Resizetizer;
-Nach:
-using MyUnoApp.Services.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider.XamlRootProvider.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider.XamlRootProvider.XamlRootProvider.XamlRootProvider;
-using Uno.Resizetizer;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "MyUnoApp (net8.0-browserwasm)"
-Vor:
-using Uno.Resizetizer;
-Nach:
-using MyUnoApp.Services.XamlRootProvider;
-using Uno.Resizetizer;
-*/
-
-/* Nicht gemergte Änderung aus Projekt "MyUnoApp (net8.0-maccatalyst)"
-Vor:
-using Uno.Resizetizer;
-Nach:
-using MyUnoApp.Services.XamlRootProvider;
-using MyUnoApp.Services.XamlRootProvider.XamlRootProvider;
-using Uno.Resizetizer;
-*/
-
 using Uno.Resizetizer;
 
 namespace MyUnoApp;
@@ -135,14 +85,14 @@ public partial class App : Application
                 {
                     // TODO: Register your services
                     //services.AddSingleton<IMyService, MyService>();
-                   
+                   // services.AddSingleton<IXamlRootProvider, XamlRootProvider>();
                 })
                 .UseNavigation(ReactiveViewModelMappings.ViewModelMappings, RegisterRoutes)
             );
         MainWindow = builder.Window;
 
 #if DEBUG
-        MainWindow.EnableHotReload();
+        MainWindow.UseStudio();
 #endif
         MainWindow.SetWindowIcon();
         
